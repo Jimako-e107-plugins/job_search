@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e107Plugin name="Job Search" lan="" version="1.6.0" date="2024-12-14" compatibility="2.3.3" installRequired="true" >
+	<author name="Father Barry" url="" />
+	<summary lan="">A basic Job Search plugin</summary>
+	<description lan="">A basic Job Search plugin</description>
+	<keywords>
+		<word>content</word>
+		<word>job</word>
+		<word>plugin</word>
+	</keywords>
+	<category>content</category>
+	<copyright>Jimako</copyright>
+	<adminLinks>
+		<link url="admin_config.php" description="" icon="images/icon_32.png" iconSmall="images/icon_16.png" icon128="images/icon_32png" primary="true" >LAN_CONFIGURE</link>
+  </adminLinks>
+	<pluginPrefs>
+<pref name='jobsch_admin'>253</pref>
+<pref name='jobsch_approval'>1</pref>
+<pref name='jobsch_counter'>text</pref>
+<pref name='jobsch_create'>0</pref>
+<pref name='jobsch_currency'>€</pref>
+<pref name='jobsch_dform'>d-m-Y</pref>
+<pref name='jobsch_email'>youremail@example.com</pref>
+<pref name='jobsch_icons'>1</pref>
+<pref name='jobsch_lastnews'>0</pref>
+<pref name='jobsch_leadz'></pref>
+<pref name='jobsch_metad'><![CDATA[Father Barry e107 job shack plugin. You can get all the latest vacancy news from here.]]></pref>
+<pref name='jobsch_metak'><![CDATA[father barry,father,barry,job,search,shack,job search,job shack]]></pref>
+<pref name='jobsch_perpage'>10</pref>
+<pref name='jobsch_pich'>100</pref>
+<pref name='jobsch_pictype'>1</pref>
+<pref name='jobsch_picw'>100</pref>
+<pref name='jobsch_read'>0</pref>
+<pref name='jobsch_sort'>DESC</pref>
+<pref name='jobsch_subdrop'></pref>
+<pref name='jobsch_subscribe'>1</pref>
+<pref name='jobsch_sysemail'>Site Admin</pref>
+<pref name='jobsch_sysfrom'>admin@example.com</pref>
+<pref name='jobsch_terms'><![CDATA[Only suitable vacancies will be accepted. Job adverts will be checked. This site is not responsible for the goods or services]]></pref>
+<pref name='jobsch_thumbheight'>50</pref>
+<pref name='jobsch_useremail'>1</pref>
+<pref name='jobsch_usexp'>1</pref>
+<pref name='jobsch_valid'>14</pref>
+	</pluginPrefs>
+</e107Plugin>

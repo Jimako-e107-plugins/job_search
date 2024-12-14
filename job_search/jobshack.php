@@ -141,7 +141,7 @@ switch ($jobsch_action)
         $jobsch_text .= $tp->parsetemplate($JOBSCH_TC_HEADER, false, $jobsearch_shortcodes);
         $jobsch_text .= $tp->parsetemplate($JOBSCH_TC_DETAIL, false, $jobsearch_shortcodes);
         $jobsch_text .= $tp->parsetemplate($JOBSCH_TC_FOOTER, false, $jobsearch_shortcodes);
-        $jobsch_text .= jobsch_footer();
+        $jobsch_text .= jobsch_footer(NULL);
         $jobsch_page=JOBSCH_41;
         break;
     case "item":
@@ -311,12 +311,12 @@ require_once(FOOTERF);
 // .
 // functions
 // .
-function jobsch_footer($jobsch_nextprev)
+function jobsch_footer($jobsch_nextprev = NULL)
 {
     global $pref, $jobsch_from, $jobsch_action, $jobsch_catid, $jobsch_subid, $jobsch_itemid;
     if (!empty($jobsch_nextprev))
     {
-        $jobsch_retval .= JOBSCH_42;
+        $jobsch_retval = JOBSCH_42;
     }
     $jobsch_retval .= "&nbsp;$jobsch_nextprev";
     return $jobsch_retval;

@@ -52,7 +52,7 @@ if (e_QUERY == "update")
         }
     }
     $pref['jobsch_email'] = $tp->toDB($_POST['jobsch_email']);
-    $pref['jobsch_approval'] = $tp->toDB($_POST['jobsch_approval']);
+ 
     $pref['jobsch_valid'] = $tp->toDB($_POST['jobsch_valid']);
     $pref['jobsch_read'] = $tp->toDB($_POST['jobsch_read']);
     $pref['jobsch_create'] = $tp->toDB($_POST['jobsch_create']);
@@ -102,118 +102,8 @@ $jobsch_text .= "<tr><td class='fcaption' colspan='2' style='text-align:left'>" 
 $jobsch_text .= "<tr><td class='forumheader3' colspan='2' style='text-align:left'><strong>$jobsch_msgtext</strong>&nbsp;</td></tr>";
 // $jobsch_text .= "<tr><td class='forumheader3' style='width:30%;'>" . JOBSCH_A6 . "</td><td class='forumheader3'>
 // <input class='tbox' style='width:190px' type='text' name='jobsch_email' value='" . $pref['jobsch_email'] . "' /></td></tr>";
-$jobsch_text .= "
-<tr><td class='forumheader3'>" . JOBSCH_A7 . "</td><td class='forumheader3'>
-		<select class='tbox' name='jobsch_approval'>
-			<option value='1' " . ($pref['jobsch_approval'] == "1" || empty($apreq)?"selected='selected'":"") . ">" . JOBSCH_A8 . "</option>
-			<option value='0' " . ($pref['jobsch_approval'] <> "1"?"selected='selected'":"") . ">" . JOBSCH_A9 . "</option>
-		</select>
-	</td></tr>";
-$jobsch_text .= "
-<tr><td class='forumheader3'>" . JOBSCH_A10 . "</td><td class='forumheader3'>
-	<input type='text' name='jobsch_valid' class='tbox' value='" . $pref['jobsch_valid'] . "' /><br /><i>" . JOBSCH_A11 . "</i></td></tr>";
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A37 . "</td>
-<td style='width:70%' class='forumheader3'>" . r_userclass("jobsch_read", $pref['jobsch_read'], "off", 'public,guest, nobody, member, admin, classes') . "
-</td></tr>";
-
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A38 . "</td>
-<td style='width:70%' class='forumheader3'>" . r_userclass("jobsch_admin", $pref['jobsch_admin'], "off", 'nobody, member, admin, classes') . "
-</td></tr>";
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A53 . "</td>
-<td style='width:70%' class='forumheader3'>" . r_userclass("jobsch_create", $pref['jobsch_create'], "off", 'nobody, member, admin, classes') . "
-</td></tr>";
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A131 . "</td>
-<td style='width:70%' class='forumheader3'>
-	<input type='checkbox' class='tbox' name='jobsch_subscribe' value='1'" .
-($pref['jobsch_subscribe'] > 0?"checked='checked'":"") . " />
-</td></tr>";
-
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A154 . "</td>
-<td style='width:70%' class='forumheader3'>
-	<input type='checkbox' class='tbox' name='jobsch_usexp' value='1'" .
-($pref['jobsch_usexp'] > 0?"checked='checked'":"") . " />
-</td></tr>";
-
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A39 . "</td>
-<td style='width:70%' class='forumheader3'>
-	<input type='checkbox' class='tbox' name='jobsch_useremail' value='1'" .
-($pref['jobsch_useremail'] > 0?"checked='checked'":"") . " />
-</td></tr>";
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A113 . "</td>
-<td style='width:70%' class='forumheader3'>
-	<input type='checkbox' class='tbox' name='jobsch_icons' value='1'" .
-($pref['jobsch_icons'] > 0?"checked='checked'":"") . " />
-</td></tr>";
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A120 . "</td>
-<td style='width:70%' class='forumheader3'>
-	<input type='checkbox' class='tbox' name='jobsch_subdrop' value='1'" .
-($pref['jobsch_subdrop'] > 0?"checked='checked'":"") . " />
-</td></tr>";
-# $jobsch_text .= "
-# <tr>
-# <td style='width:30%' class='forumheader3'>" . JOBSCH_A114 . "</td>
-# <td style='width:70%' class='forumheader3'>
-# <input type='checkbox' class='tbox' name='jobsch_thumbs' value='1'" .
-# ($pref['jobsch_thumbs'] > 0?"checked='checked'":"") . " />
-# </td></tr>";
-# $jobsch_text .= "<tr><td class='forumheader3' style='width:30%;'>" . JOBSCH_A115 . "</td><td class='forumheader3'>
-# <input class='tbox' style='width:10%;' type='text' name='jobsch_thumbheight' value='" . $pref['jobsch_thumbheight'] . "' /></td></tr>";
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A40 . "</td>
-<td style='width:70%' class='forumheader3'>
-<select name='jobsch_pictype' class='tbox'>
-<option value='0' " .
-($pref['jobsch_pictype'] == 0?"selected='selected'":"") . ">" . JOBSCH_A98 . "</option>
-<option value='1' " .
-($pref['jobsch_pictype'] == 1?"selected='selected'":"") . ">" . JOBSCH_A99 . "</option>
-<option value='2' " .
-($pref['jobsch_pictype'] == 2?"selected='selected'":"") . ">" . JOBSCH_A100 . "</option>
-</select>
-</td></tr>";
-// default sort order
-$jobsch_text .= "
-<tr>
-<td style='width:30%' class='forumheader3'>" . JOBSCH_A153 . "</td>
-<td style='width:70%' class='forumheader3'>
-<select name='jobsch_sort' class='tbox'>
-<option value='ASC' " .
-($pref['jobsch_sort'] == "ASC"?"selected='selected'":"") . ">" . JOBSCH_A151 . "</option>
-<option value='DESC' " .
-($pref['jobsch_sort'] == "DESC"?"selected='selected'":"") . ">" . JOBSCH_A152 . "</option>
-</select>
-</td></tr>";
-# $jobsch_text .= "<tr><td class='forumheader3' style='width:30%;'>" . JOBSCH_A94 . "</td><td class='forumheader3'>
-# <input class='tbox' style='width:10%;' type='text' name='jobsch_pich' value='" . $pref['jobsch_pich'] . "' /></td></tr>";
-# $jobsch_text .= "<tr><td class='forumheader3' style='width:30%;'>" . JOBSCH_A93 . "</td><td class='forumheader3'>
-# <input class='tbox' style='width:10%;' type='text' name='jobsch_picw' value='" . $pref['jobsch_picw'] . "' /></td></tr>";
-$jobsch_text .= "<tr><td class='forumheader3' style='width:30%;'>" . JOBSCH_A95 . "</td><td class='forumheader3'>
-<input class='tbox' style='width:10%;' type='text' name='jobsch_currency' value='" . $pref['jobsch_currency'] . "' /></td></tr>";
-
-$jobsch_text .= "<tr><td class='forumheader3' style='width:30%;'>" . JOBSCH_A42 . "</td><td class='forumheader3'>
-<input class='tbox' style='width:10%;' type='text' name='jobsch_perpage' value='" . $pref['jobsch_perpage'] . "' /></td></tr>";
-$jobsch_text .= "<tr><td class='forumheader3' style='width:30%;'>" . JOBSCH_A109 . "</td><td class='forumheader3'>
-<input class='tbox' style='width:10%;' type='text' name='jobsch_leadz' value='" . $pref['jobsch_leadz'] . "' /></td></tr>";
-
-$jobsch_text .= "
-<tr><td class='forumheader3'>" . JOBSCH_A144 . "</td><td class='forumheader3'>
-	<input type='text' name='jobsch_sysemail' style='width:80%' class='tbox' value='" . $pref['jobsch_sysemail'] . "' /></td></tr>";
+ 
+  
 
 $jobsch_text .= "
 <tr><td class='forumheader3'>" . JOBSCH_A156 . "</td><td class='forumheader3'>

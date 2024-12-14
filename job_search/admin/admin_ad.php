@@ -1,6 +1,6 @@
 <?php
 
-require_once("../../class2.php");
+require_once("../../../class2.php");
 if (!defined('e107_INIT'))
 {
     exit;

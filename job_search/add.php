@@ -16,7 +16,7 @@ if (!check_class($pref['jobsch_create']))
     require_once(FOOTERF) ;
     exit;
 }
-require_once(e_HANDLER . "calendar/calendar_class.php");
+require_once(e_PLUGIN . "job_search/handlers/calendar/calendar_class.php");
 $jobsch_cal = new DHTML_Calendar(true);
 $jobsch_text .= $jobsch_cal->load_files();
 
