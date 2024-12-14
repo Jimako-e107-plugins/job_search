@@ -5,6 +5,7 @@ if (!defined('e107_INIT'))
 }
 include_once(e_HANDLER . 'shortcode_handler.php');
 $jobsearch_shortcodes = $tp->e_sc->parse_scbatch(__FILE__);
+
 /*
 
 SC_BEGIN JOBPOSTER
@@ -552,5 +553,7 @@ SC_BEGIN JOB_JOBSENDER
 global $pref;
 return $pref['jobsch_sysfrom'];
 SC_END
-* /
+
+*/
+
 ?>
