@@ -22,7 +22,7 @@ $weights = array('1','2', '2', '2', '0.5', '1', '1');
 $no_results = LAN_198;
 
 $where = "find_in_set(jobsch_catclass,'" . USERCLASS_LIST . "') " .
-($pref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") .
+($pluginPref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") .
 " and (jobsch_closedate > " . $today . " or jobsch_closedate=0 ) and ";
 $order = array('t.jobsch_vacancy' => DESC);
 $table = "jobsch_ads as t

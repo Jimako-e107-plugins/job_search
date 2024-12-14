@@ -25,12 +25,12 @@ if ($mode == "new_page" || $mode == "new_menu")
 {
     $lvisit = $this->getlvisit();
     $qry = " (jobsch_closedate = 0  or jobsch_closedate is null or jobsch_closedate>$current) ".
-($pref['jobsch_approval']==1?" and jobsch_approved > 0":"" )." and jobsch_postdate>" . $lvisit ;
+($pluginPref['jobsch_approval']==1?" and jobsch_approved > 0":"" )." and jobsch_postdate>" . $lvisit ;
 }
 else
 {
     $qry = "(jobsch_closedate = 0  or jobsch_closedate is null or jobsch_closedate>$current) and jobsch_cid>0 ".
-($pref['jobsch_approval']==1?" and jobsch_approved > 0":"" )." ";
+($pluginPref['jobsch_approval']==1?" and jobsch_approved > 0":"" )." ";
 }
 
 $bullet = $this->getBullet($arr[6], $mode);

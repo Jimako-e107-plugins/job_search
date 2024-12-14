@@ -5,6 +5,8 @@ if (!defined('e107_INIT'))
 }
 $e_event->register("postuserset", "job_search_postuserset");
 
+$pluginPref = e107::pref('job_search');
+
 function job_search_postuserset($data)
 {
     global $tp, $sql;

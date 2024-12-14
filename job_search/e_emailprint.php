@@ -39,7 +39,7 @@ where r.jobsch_cid=$id and find_in_set(jobsch_catclass,'" . USERCLASS_LIST . "')
     // $jobsch_closedate = $con->convert_date($jobsch_closedate, "long");
     $jobsch_text = "<span style=\"font-size: 16px; color: black; font-family: Tahoma, Verdana, Arial, Helvetica; text-decoration: none\">
 	<b>" . $jobsch_vacancy . "</b></span>";
-    if ($pref['jobsch_pictype'] == 1)
+    if ($pluginPref['jobsch_pictype'] == 1)
     {
         if (!empty($jobsch_document) && file_exists(e_PLUGIN . "job_search/images/icons/$jobsch_document"))
         {

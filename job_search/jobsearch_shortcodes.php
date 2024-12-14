@@ -36,18 +36,18 @@ return $retval;
 SC_END
 SC_BEGIN JOBVIEWS
 global $pref, $tp, $jobsch_counter, $jobsch_views;
-if ($pref['jobsch_counter'] != "NONE")
+if ($pluginPref['jobsch_counter'] != "NONE")
 {
     // counter is available for all ads
-    if ($pref['jobsch_counter'] == "ALL" && !empty($jobsch_counter))
+    if ($pluginPref['jobsch_counter'] == "ALL" && !empty($jobsch_counter))
     {
         // user defined counter and one is set
         $retval .= jobsch_makeimg($jobsch_views, $jobsch_counter);
     }
-    if ($pref['jobsch_counter'] != "ALL" && !empty($jobsch_counter))
+    if ($pluginPref['jobsch_counter'] != "ALL" && !empty($jobsch_counter))
     {
         // admin defined setting for counter and ignore the set chosen by the user
-        $retval .= jobsch_makeimg($jobsch_views, $pref['jobsch_counter']);
+        $retval .= jobsch_makeimg($jobsch_views, $pluginPref['jobsch_counter']);
     }
 }
 else
@@ -111,8 +111,8 @@ if ($jobsch_db1->db_Select("jobsch_subcats", "*", "jobsch_categoryid=$jobsch_cat
     {
         extract($jobsch_subs);
         $jobsch_count = $jobsch_db2->db_Select("jobsch_ads", "jobsch_cid", "where jobsch_category=$jobsch_subid $jobsch_where " .
-            ($pref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate='' or jobsch_closedate is null or jobsch_closedate>$jobsch_today)", "nowhere", false);
-        if ($pref['jobsch_subdrop'] == 1)
+            ($pluginPref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate='' or jobsch_closedate is null or jobsch_closedate>$jobsch_today)", "nowhere", false);
+        if ($pluginPref['jobsch_subdrop'] == 1)
         {
             if ($jobsch_count > 0)
             {
@@ -141,7 +141,7 @@ else
 {
     $catsubs = JOBSCH_81;
 }
-return ($pref['jobsch_subdrop'] == 1?$jobsch_selector: $catsubs);
+return ($pluginPref['jobsch_subdrop'] == 1?$jobsch_selector: $catsubs);
 SC_END
 
 SC_BEGIN JOBCATNAME
@@ -240,7 +240,7 @@ SC_END
 
 SC_BEGIN CURRENCY_SYMBOL
 global $pref, $tp;
-return $tp->toHTML($pref['jobsch_currency']);
+return $tp->toHTML($pluginPref['jobsch_currency']);
 SC_END
 
 SC_BEGIN JOBTITLE
@@ -344,7 +344,7 @@ SC_BEGIN JOBDOWNLOAD
 global $pref, $tp, $jobsch_document;
 if (!empty($jobsch_document))
 {
-	switch ($pref['jobsch_pictype'])
+	switch ($pluginPref['jobsch_pictype'])
 	{
 	    case 1:
 	        if (!empty($jobsch_document) && file_exists("./documents/$jobsch_document"))
@@ -372,7 +372,7 @@ SC_END
 
 SC_BEGIN JOBTERMS
 global $pref, $tp;
-return $tp->toHTML($pref['jobsch_terms'], true) ;
+return $tp->toHTML($pluginPref['jobsch_terms'], true) ;
 SC_END
 
 SC_BEGIN JOBLOGO
@@ -445,7 +445,7 @@ SC_END
 
 SC_BEGIN JOBMANAGE
 global $pref, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
-if (USER && check_class($pref['jobsch_create']))
+if (USER && check_class($pluginPref['jobsch_create']))
 {
     if ($parm == "button")
     {
@@ -466,14 +466,14 @@ SC_END
 SC_BEGIN JOB_NEXTPREV
 global $tp, $jobsch_catid, $jobsch_subid, $mycId, $jobsch_count, $pref, $jobsch_from, $jobsch_local;
 $jobsch_npaction = "list.$jobsch_catid.$jobsch_subid.$mycId.0.$jobsch_local";
-$jobsch_npparms = $jobsch_count . "," . $pref['jobsch_perpage'] . "," . $jobsch_from . "," . e_SELF . '?' . "[FROM]." . $jobsch_npaction;
+$jobsch_npparms = $jobsch_count . "," . $pluginPref['jobsch_perpage'] . "," . $jobsch_from . "," . e_SELF . '?' . "[FROM]." . $jobsch_npaction;
 $jobsch_nextprev = $tp->parseTemplate("{NEXTPREV={$jobsch_npparms}}") . "";
 return $jobsch_nextprev;
 
 SC_END
 SC_BEGIN JOBSUBSCRIBE
 global $pref, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
-if ($pref['jobsch_subscribe'] > 0 && USER)
+if ($pluginPref['jobsch_subscribe'] > 0 && USER)
 {
     if ($parm == "button")
     {
@@ -551,7 +551,7 @@ SC_END
 
 SC_BEGIN JOB_JOBSENDER
 global $pref;
-return $pref['jobsch_sysfrom'];
+return $pluginPref['jobsch_sysfrom'];
 SC_END
 
 */

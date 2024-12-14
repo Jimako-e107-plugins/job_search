@@ -29,7 +29,7 @@ $eplug_rss_feed[] = $feed;
 $rss = array();
 global $pref;
 
-if (check_class($pref['jobsch_read']))
+if (check_class($pluginPref['jobsch_read']))
 {
 
 // get unexpired adds which are approved and are visible to this class

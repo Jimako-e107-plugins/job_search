@@ -9,7 +9,7 @@ if (!defined('e107_INIT'))
 require_once(e_HANDLER . "userclass_class.php");
 require_once(e_HANDLER . "ren_help.php");
 // check class for creating editing ads
-if (!check_class($pref['jobsch_create']))
+if (!check_class($pluginPref['jobsch_create']))
 {
     require_once(HEADERF);
     $ns->tablerender(JOBSCH_54, JOBSCH_53);
@@ -28,9 +28,9 @@ $action = $_POST['action'];
 $catname2 = $_POST["catname2"];
 $catid = $_POST["catid"];
 $jobsch_action = $_POST['jobsch_action'];
-if (empty($pref['jobsch_dform']))
+if (empty($pluginPref['jobsch_dform']))
 {
-    $pref['jobsch_dform'] = "d-m-Y";
+    $pluginPref['jobsch_dform'] = "d-m-Y";
 }
 if ($actvar == "delete")
 {
@@ -55,7 +55,7 @@ if ($_POST['jobsch_delpic'] == "1")
 }
 $cpic = "";
 $file = "";
-if (!empty($_FILES['file_userfile']['name']) && $pref['jobsch_pictype'] == 1)
+if (!empty($_FILES['file_userfile']['name']) && $pluginPref['jobsch_pictype'] == 1)
 {
     $userid = USERID . "_";
     $evrsn_up = jobshack_fileup("file_userfile", e_PLUGIN . "job_search/documents/", $userid);
@@ -90,7 +90,7 @@ else
     $cpic = $_POST['jobsch_document'];
 }
 // $jobsch_action = "submit";
-if ($pref['jobsch_approval'] == 1)
+if ($pluginPref['jobsch_approval'] == 1)
 {
     $jobsch_approved = 0;
     $jobsch_msg = JOBSCH_48;
@@ -100,14 +100,14 @@ else
     $jobsch_approved = 1;
     $jobsch_msg = JOBSCH_68;
 }
-if ($pref['jobsch_valid'] > 0 && empty($_POST['jobsch_closedate']))
+if ($pluginPref['jobsch_valid'] > 0 && empty($_POST['jobsch_closedate']))
 {
     // we use default period and no date set by user
     $month = date("n");
     $day = date("j");
     $year = date("Y");
     $ptime = mktime(0, 0, 0, $month, $day, $year);
-    $adlength = $pref['jobsch_valid'] * 86400;
+    $adlength = $pluginPref['jobsch_valid'] * 86400;
     $ptime = $ptime + $adlength;
 }
 else
@@ -118,7 +118,7 @@ if (isset($_POST['jobsch_closedate']))
 {
     // a date has been entered by the user
     $jobsch_tmp = explode("-", $_POST['jobsch_closedate']);
-    switch ($pref['jobsch_dform'])
+    switch ($pluginPref['jobsch_dform'])
     {
         case "Y-m-d":
             $ptime = mktime(0, 0, 1, $jobsch_tmp[1], $jobsch_tmp[2], $jobsch_tmp[0]);
@@ -165,7 +165,7 @@ if ($actvar == "edit")
 
 if ($actvar == "new")
 {
-    // if ($pref['jobsch_pictype'] == 1)
+    // if ($pluginPref['jobsch_pictype'] == 1)
     // {
     // makeThumbnail($cpic, $t_ht = 100);
     // }
@@ -338,7 +338,7 @@ $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" .
 $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_25 . ":</td><td class=\"forumheader3\" style='width:80%;text-align:left;vertical-align:top;'>
 	$jobsch_catlist</td></tr>";
 
-switch ($pref['jobsch_pictype'])
+switch ($pluginPref['jobsch_pictype'])
 {
     // Upload to server
     case 1:
@@ -373,19 +373,19 @@ $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" .
 		<input type='input' name='jobsch_companyphone' class='tbox' style='width:150px;text-align:left;' value='" . $tp->toFORM($jobsch_companyphone) . "' /></td></tr>";
 $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_119 . ":</td><td class=\"forumheader3\" style='width:80%;text-align:left;vertical-align:top;'>
 		<input type='input' name='jobsch_empref' class='tbox' style='width:250px;text-align:left;' value='" . $tp->toFORM($jobsch_empref) . "' /></td></tr>";
-if ($pref['jobsch_usexp'] > 0)
+if ($pluginPref['jobsch_usexp'] > 0)
 {
     // calendar options
     $jobsch_cal_options['firstDay'] = 1;
     $jobsch_cal_options['showsTime'] = false;
     $jobsch_cal_options['showOthers'] = false;
     $jobsch_cal_options['weekNumbers'] = false;
-    $jobsch_cal_df = "%" . str_replace("-", "-%", $pref['jobsch_dform']);
-    # print $jobsch_cal_df."<br>".$pref['jobsch_dform']."<br>";
+    $jobsch_cal_df = "%" . str_replace("-", "-%", $pluginPref['jobsch_dform']);
+    # print $jobsch_cal_df."<br>".$pluginPref['jobsch_dform']."<br>";
     $jobsch_cal_options['ifFormat'] = $jobsch_cal_df;
     $jobsch_cal_attrib['class'] = "tbox";
     $jobsch_cal_attrib['name'] = "jobsch_closedate";
-    $jobsch_cal_attrib['value'] = ($jobsch_closedate > 0?date($pref['jobsch_dform'], $jobsch_closedate):"");
+    $jobsch_cal_attrib['value'] = ($jobsch_closedate > 0?date($pluginPref['jobsch_dform'], $jobsch_closedate):"");
     $jobsch_desc = $jobsch_cal->make_input_field($jobsch_cal_options, $jobsch_cal_attrib);
     // $jobsch_desdate = date("l d F Y", $itrq_decisiondate);
     $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_117 . ":</td>
@@ -393,7 +393,7 @@ if ($pref['jobsch_usexp'] > 0)
 		$jobsch_desc </td></tr>";
     // end cal
 }
-if ($pref['jobsch_useremail'] == 1)
+if ($pluginPref['jobsch_useremail'] == 1)
 {
     $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_32 . ":</td><td class=\"forumheader3\" style='width:80%;text-align:left;vertical-align:top;'>
 		<input type='input' name='jobsch_email' class='tbox' style='width:75%' value='" . $tp->toFORM($jobsch_email) . "' /></td></tr>";
@@ -409,11 +409,11 @@ $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" .
 // HTML Area code
 // <tr><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_33 . ":</td><td class='forumheader3'>
 // <textarea class='tbox' style='width:80%;vertical-align:top;' rows='8' name='jobsch_vacancydetails'  onselect='storeCaret(this);' onclick='storeCaret(this);' onkeyup='storeCaret(this);'>" . $jobsch_vacancydetails . "</textarea><br />" . ren_help(2) . "
-$insertjs = (!$pref['wysiwyg'])?"rows='15' onselect='storeCaret(this);' onclick='storeCaret(this);' onkeyup='storeCaret(this);'":
+$insertjs = (!$pluginPref['wysiwyg'])?"rows='15' onselect='storeCaret(this);' onclick='storeCaret(this);' onkeyup='storeCaret(this);'":
 "rows='25' style='width:100%' ";
 $jobsch_vacancydetails = $tp->toForm($jobsch_vacancydetails);
 $jobsch_text .= "<textarea class='tbox' id='jobsch_vacancydetails' name='jobsch_vacancydetails' cols='80'  style='width:95%' $insertjs>" . (strstr($jobsch_vacancydetails, "[img]http") ? $jobsch_vacancydetails : str_replace("[img]../", "[img]", $jobsch_vacancydetails)) . "</textarea>";
-if (!$pref['wysiwyg'])
+if (!$pluginPref['wysiwyg'])
 {
     $jobsch_text .= "<input id='helpb' class='helpbox' type='text' name='helpb' size='100' style='width:95%'/>
 			<br />" . display_help("helpb");
@@ -443,12 +443,12 @@ else
     $jobsch_text .= "<option value='0'>" . JOBSCH_A122 . "</option>";
 }
 $jobsch_text .= "</select></td></tr>";
-if ($jobsch_approved != 1 && $pref['jobsch_approval'] == 1)
+if ($jobsch_approved != 1 && $pluginPref['jobsch_approval'] == 1)
 {
     $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_84 . "</td><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_83 . "</td></tr>";
 }
 // Counter
-if ($pref['jobsch_counter'] == "ALL")
+if ($pluginPref['jobsch_counter'] == "ALL")
 {
     $jobsch_text .= "<tr><td class=\"forumheader3\" style='vertical-align:top;' >" . JOBSCH_87 . ":</td><td class=\"forumheader3\" style='width:80%;text-align:left;vertical-align:top;'>
 	<select class='tbox' name='jobsch_counter'>
@@ -475,7 +475,7 @@ $jobsch_text .= "<tr><td colspan=\"2\" class=\"fcaption\" style='text-align:left
 	<input class='button' type='submit' value='" . JOBSCH_64 . "' onclick='this.form.jobsch_action.value=\"save\";'name='merc' />";
 if ($actvar == "edit")
 {
-    if ($pref['jobsch_approval'] == 1 && $jobsch_approved == 1)
+    if ($pluginPref['jobsch_approval'] == 1 && $jobsch_approved == 1)
     {
         $jobsch_text .= "<br /><em>" . JOBSCH_85 . "</em>";
     }

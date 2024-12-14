@@ -20,7 +20,7 @@ else
 
 // check if we use the wysiwyg for text areas
 $e_wysiwyg = "jobsch_vacancydetails";
-if ($pref['wysiwyg'])
+if ($pluginPref['wysiwyg'])
 {
     $WYSIWYG = true;
 }
@@ -28,7 +28,7 @@ require_once("jobsearch_template.php");
 require_once("jobsearch_shortcodes.php");
 
 // Check that access is permitted to this plugin
-$jobsch_access = check_class($pref['jobsch_read']) || check_class($pref['jobsch_admin']) || check_class($pref['jobsch_create']);
+$jobsch_access = check_class($pluginPref['jobsch_read']) || check_class($pluginPref['jobsch_admin']) || check_class($pluginPref['jobsch_create']);
 if (!$jobsch_access)
 {
     $jobsch_text = $tp->toHTML(JOBSCH_40);
@@ -83,9 +83,9 @@ else
 // If from not defined then make it zero
 $jobsch_from = ($jobsch_from > 0?$jobsch_from: 0);
 // If no per page pref set then default to 10 per page
-$pref['jobsch_perpage'] = ($pref['jobsch_perpage'] > 0?$pref['jobsch_perpage']:10);
+$pluginPref['jobsch_perpage'] = ($pluginPref['jobsch_perpage'] > 0?$pluginPref['jobsch_perpage']:10);
 // Check if subscriptions being done
-if ($pref['jobsch_subscribe'] > 0 && isset($_REQUEST['jobsch_subsub']))
+if ($pluginPref['jobsch_subscribe'] > 0 && isset($_REQUEST['jobsch_subsub']))
 {
     if ($_REQUEST['jobsch_subme'] > 0)
     {
@@ -116,7 +116,7 @@ if (!USER)
    # exit;
 }
 // check class for creating editing ads
-if (!$pref['jobsch_subscribe'])
+if (!$pluginPref['jobsch_subscribe'])
 {
  #   require_once(HEADERF);
  ##   $ns->tablerender(JOBSCH_54, JOBSCH_105);
@@ -154,7 +154,7 @@ switch ($jobsch_action)
                 left join #jobsch_cats on jobsch_categoryid=jobsch_catid
                 left join #jobsch_locals on jobsch_locality=jobsch_localid
                 where r.jobsch_cid = $jobsch_itemid and find_in_set(jobsch_catclass, '" . USERCLASS_LIST . "') " .
-            ($pref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . "
+            ($pluginPref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . "
                 and (jobsch_closedate = 0 or jobsch_closedate = '' or jobsch_closedate is null or jobsch_closedate > $jobsch_today) ";
             if ($sql->db_Select_gen($jobsch_arg, false))
             {
@@ -191,8 +191,8 @@ switch ($jobsch_action)
                 left join #jobsch_subcats as t on r.jobsch_category=jobsch_subid
                 left join #jobsch_cats on jobsch_categoryid=jobsch_catid
                 where r.jobsch_category = $jobsch_subid $jobsch_where and find_in_set(jobsch_catclass, '" . USERCLASS_LIST . "')" .
-            ($pref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate = '' or jobsch_closedate is null or jobsch_closedate > $jobsch_today)
-                order by jobsch_postdate " . $tp->toFORM($pref['jobsch_sort']) . " limit $jobsch_from, " . $pref['jobsch_perpage'];
+            ($pluginPref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate = '' or jobsch_closedate is null or jobsch_closedate > $jobsch_today)
+                order by jobsch_postdate " . $tp->toFORM($pluginPref['jobsch_sort']) . " limit $jobsch_from, " . $pluginPref['jobsch_perpage'];
             // print $jobsch_arg ." <br > ". $jobsch_today;
             $jobsch_count = $sql2->db_Count("jobsch_ads", "(*)", "where jobsch_category = $jobsch_subid and jobsch_approved > 0 and (jobsch_closedate = 0 or jobsch_closedate = '' or jobsch_closedate is null or jobsch_closedate > $jobsch_today)");
             $sql2->db_Select_gen("select * from #jobsch_subcats left join #jobsch_cats on jobsch_categoryid=jobsch_catid where jobsch_subid=$jobsch_subid");
@@ -232,7 +232,7 @@ switch ($jobsch_action)
                 <input type='hidden' name='jobsch_itemid' value='" . $jobsch_itemid . "' />
                 <input type='hidden' name='jobsch_tmp' value='" . $jobsch_tmp . "' />
 				</div>";
-            $jobsch_colspan = ($pref['jobsch_icons'] > 0?3:2);
+            $jobsch_colspan = ($pluginPref['jobsch_icons'] > 0?3:2);
             $jobsch_from = 0;
             // get the sub and cat names
             $sql->db_Select("jobsch_cats", "jobsch_catname", "jobsch_catid=$jobsch_catid");
@@ -248,7 +248,7 @@ switch ($jobsch_action)
                 {
                     extract($jobsch_row);
                     $jobsch_count = $sql2->db_Count("jobsch_ads", "(*)", "where jobsch_category=$jobsch_subid and (jobsch_closedate = 0 or jobsch_closedate='' or jobsch_closedate is null or jobsch_closedate>$jobsch_today) $jobsch_where" .
-                        ($pref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate='' or jobsch_closedate is null or jobsch_closedate>$jobsch_today) ");
+                        ($pluginPref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate='' or jobsch_closedate is null or jobsch_closedate>$jobsch_today) ");
                     $jobsch_text .= $tp->parsetemplate($JOBSCH_SUB_DETAIL, false, $jobsearch_shortcodes);
                 } // while
             }
@@ -267,7 +267,7 @@ switch ($jobsch_action)
     case "cat":
     default:
         {
-            $jobsch_colspan = ($pref['jobsch_icons'] > 0?4:3);
+            $jobsch_colspan = ($pluginPref['jobsch_icons'] > 0?4:3);
             // $jobsch_text = jobsch_header();
             $jobsch_text .= "
             <form id='subform2' method='post' action='" . e_SELF . "' >
@@ -297,13 +297,13 @@ switch ($jobsch_action)
 // define the over ride meta tags
 // define("PAGE_NAME", JOBSCH_1);
 define("e_PAGETITLE", JOBSCH_1." : ".$jobsch_page);
-if (!empty($pref['jobsch_metad']))
+if (!empty($pluginPref['jobsch_metad']))
 {
-    define("META_DESCRIPTION", $pref['jobsch_metad']);
+    define("META_DESCRIPTION", $pluginPref['jobsch_metad']);
 }
-if (!empty($pref['jobsch_metak']))
+if (!empty($pluginPref['jobsch_metak']))
 {
-    define("META_KEYWORDS", $pref['jobsch_metak']);
+    define("META_KEYWORDS", $pluginPref['jobsch_metak']);
 }
 require_once(HEADERF);
 $ns->tablerender(JOBSCH_1, $jobsch_text);
@@ -325,7 +325,7 @@ function jobsch_makeimg($number, $set)
 {
     global $pref;
 
-    $number = str_pad($number, ($pref['jobsch_leadz'] > 0?$pref['jobsch_leadz']:0), "0", STR_PAD_LEFT);
+    $number = str_pad($number, ($pluginPref['jobsch_leadz'] > 0?$pluginPref['jobsch_leadz']:0), "0", STR_PAD_LEFT);
     $retval = "";
     $len = strlen($number);
     $url = "./images/counter/";

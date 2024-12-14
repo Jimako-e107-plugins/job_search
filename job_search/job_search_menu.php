@@ -37,7 +37,7 @@ if ($dsel = $sql->db_Select_gen($arg))
 
     $jobsch_text .= "<strong><a href='" . e_PLUGIN . "job_search/jobshack.php?0.item." . $jobsch_item['jobsch_categoryid'] . "." . $jobsch_item['jobsch_subid'] . "." . $jobsch_item['jobsch_cid'] . "' >" . $tp->html_truncate($jobsch_item['jobsch_vacancy'], 30, JOBSCH_MENU_4) . "</a></strong><br />";
 
-        $jobsch_text .= $tp-> html_truncate($tp-> toHTML($pref['jobsch_currency'].$jobsch_item['jobsch_salary'],false,"no_make_clickable emotes_off"),30) . "&nbsp;<br />";
+        $jobsch_text .= $tp-> html_truncate($tp-> toHTML($pluginPref['jobsch_currency'].$jobsch_item['jobsch_salary'],false,"no_make_clickable emotes_off"),30) . "&nbsp;<br />";
 }
 $jobsch_text .= "</div>";
 $ns->tablerender(JOBSCH_MENU_1, $jobsch_text);
