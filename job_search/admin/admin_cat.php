@@ -2,196 +2,100 @@
 require_once("../../../class2.php");
 if (!defined('e107_INIT'))
 {
-    exit;
+	exit;
 }
 
 if (!getperms("P"))
 {
-    header("location:" . e_BASE . "index.php");
-    exit;
+	header("location:" . e_BASE . "index.php");
+	exit;
 }
 
 if (e_LANGUAGE != "English" && file_exists(e_PLUGIN . "job_search/languages/admin/" . e_LANGUAGE . ".php"))
 {
-    include_once(e_PLUGIN . "job_search/languages/admin/" . e_LANGUAGE . ".php");
+	include_once(e_PLUGIN . "job_search/languages/admin/" . e_LANGUAGE . ".php");
 }
 else
 {
-    include_once(e_PLUGIN . "job_search/languages/admin/English.php");
+	include_once(e_PLUGIN . "job_search/languages/admin/English.php");
 }
-require_once(e_HANDLER . "userclass_class.php");
+
+include_once(e_PLUGIN . "job_search/admin/left_menu.php");
+
+
+class jobsch_cats_ui extends e_admin_ui
+{
+
+	protected $pluginTitle		= 'Job Search';
+	protected $pluginName		= 'job_search';
+	//	protected $eventName		= 'job_search-'; // remove comment to enable event triggers in admin. 		
+	protected $table			= 'jobsch_cats';
+	protected $pid				= 'jobsch_catid';
+	protected $perPage			= 10;
+	protected $batchDelete		= true;
+	protected $batchExport     = true;
+	protected $batchCopy		= true;
+
+	//	protected $sortField		= 'somefield_order';
+	//	protected $sortParent      = 'somefield_parent';
+	//	protected $treePrefix      = 'somefield_title';
+
+	//	protected $tabs				= array('tab1'=>'Tab 1', 'tab2'=>'Tab 2'); // Use 'tab'=>'tab1'  OR 'tab'=>'tab2' in the $fields below to enable. 
+
+	//	protected $listQry      	= "SELECT * FROM `#tableName` WHERE field != '' "; // Example Custom Query. LEFT JOINS allowed. Should be without any Order or Limit.
+
+	protected $listOrder		= 'jobsch_catid DESC';
+
+	protected $fields 		= array(
+		'checkboxes'              => array('title' => '', 'type' => null, 'data' => null, 'width' => '5%', 'thclass' => 'center', 'forced' => 'value', 'class' => 'center', 'toggle' => 'e-multiselect', 'readParms' => [], 'writeParms' => [],),
+		'jobsch_catid'            => array('title' => 'Catid', 'type' => 'number', 'data' => 'int', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'jobsch_caticon'          => array('title' => JOBSCH_95, 'type' => 'icon', 'data' => 'safestr', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'jobsch_catname'          => array('title' => JOBSCH_A25, 'type' => 'text', 'data' => 'safestr', 'width' => 'auto', 'filter' => true, 'inline' => true, 'validate' => true, 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'jobsch_catdesc'          => array('title' => JOBSCH_A26, 'type' => 'textarea', 'data' => 'safestr', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'jobsch_catclass'         => array('title' => JOBSCH_A27, 'type' => 'userclass', 'data' => 'int', 'width' => 'auto', 'batch' => true, 'filter' => true, 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'options'                 => array('title' => LAN_OPTIONS, 'type' => null, 'data' => null, 'width' => '10%', 'thclass' => 'center last', 'class' => 'center last', 'forced' => 'value', 'readParms' => [], 'writeParms' => [],),
+	);
+
+	protected $fieldpref = array('jobsch_catid', 'jobsch_caticon' , 'jobsch_catname', 'jobsch_catdesc', 'jobsch_catclass' );
+
+
+	//	protected $preftabs        = array('General', 'Other' );
+	protected $prefs = array();
+
+
+	public function init()
+	{
+		$this->fields['jobsch_catname']['writeParms']['size'] = 'block-level'  ;
+		$this->fields['jobsch_catdesc']['writeParms']['size'] = 'block-level';
+		$this->postFilterMarkup = $this->AddButton();
+	}
+
+	function AddButton()
+	{
+		$text = "</fieldset></form><div class='e-container'>
+      <table  style='" . ADMIN_WIDTH . "' class='table adminlist table-striped'>";
+		$text .=
+			'<a href="admin_cat.php?mode=cat&action=create"  
+      class="btn batch e-hide-if-js btn-success"><span>'. JOBSCH_A21.'</span></a>';
+		$text .= "</td></tr></table></div><form><fieldset>";
+		return $text;
+	}
+	
+	// function beforeDelete() {
+	// 	//define("JOBSCH_A29", "Category in use. Can not delete.");
+	// 	//define("JOBSCH_A31","Unable to delete category");
+
+	// }
+}
+class jobsch_cats_form_ui extends e_admin_form_ui
+{
+}
+
+
+new job_search_adminArea();
+
 require_once(e_ADMIN . "auth.php");
-
-$jobsch_action = $_POST['jobsch_action'];
-$jobsch_edit = false;
-// * If we are updating then update or insert the record
-if ($jobsch_action == 'update')
-{
-    $jobsch_id = $_POST['jobsch_id'];
-    if ($jobsch_id == 0)
-    {
-        // New record so add it
-        $jobsch_args = "
-		'0',
-		'" . $tp->toDB($_POST['jobsch_catname']) . "',
-		'" . $tp->toDB($_POST['jobsch_catdesc']) . "',
-		'" . $tp->toDB($_POST['jobsch_catclass']) . "',
-		'" . $tp->toDB($_POST['jobsch_caticon']) . "'";
-        if ($sql->db_Insert("jobsch_cats", $jobsch_args))
-        {
-            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A28 . "</strong></td></tr>";
-        }
-    }
-    else
-    {
-        // Update existing
-        $jobsch_args = "
-		jobsch_catname='" . $tp->toDB($_POST['jobsch_catname']) . "',
-		jobsch_catdesc='" . $tp->toDB($_POST['jobsch_catdesc']) . "',
-		jobsch_catclass='" . $tp->toDB($_POST['jobsch_catclass']) . "',
-		jobsch_caticon='" . $tp->toDB($_POST['jobsch_caticon']) . "'
-		where jobsch_catid='$jobsch_id'";
-        if ($sql->db_Update("jobsch_cats", $jobsch_args))
-        {
-            // Changes saved
-            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><b>" . JOBSCH_A28 . "</b></td></tr>";
-        }
-    }
-}
-// We are creating, editing or deleting a record
-if ($jobsch_action == 'dothings')
-{
-    $jobsch_id = $_POST['jobsch_selcat'];
-    $jobsch_do = $_POST['jobsch_recdel'];
-    $jobsch_dodel = false;
-
-    switch ($jobsch_do)
-    {
-        case '1': // Edit existing record
-            {
-                // We edit the record
-                $sql->db_Select("jobsch_cats", "*", "jobsch_catid='$jobsch_id'");
-                $jobsch_row = $sql->db_Fetch() ;
-                extract($jobsch_row);
-                $jobsch_edit = true;
-                break;
-            }
-        case '2': // New category
-            {
-                // Create new record
-                $jobsch_id = 0;
-                // set all fields to zero/blank
-                $jobsch_edit = true;
-                break;
-            }
-        case '3':
-            {
-                // delete the record
-                if ($_POST['jobsch_okdel'] == '1')
-                {
-                    if ($sql->db_Select("jobsch_subcats", "jobsch_subid", " where jobsch_categoryid='$jobsch_id'", "nowhere"))
-                    {
-                        $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A29 . "</strong></td></tr>";
-                    }
-                    else
-                    {
-                        if ($sql->db_Delete("jobsch_cats", " jobsch_catid='$jobsch_id'"))
-                        {
-                            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A30 . "</strong></td></tr>";
-                        }
-                        else
-                        {
-                            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A31 . "</strong></td></tr>";
-                        }
-                    }
-                }
-                else
-                {
-                    $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A32 . "</strong></td></tr>";
-                }
-
-                $jobsch_dodel = true;
-                $jobsch_edit = false;
-            }
-    }
-
-    if (!$jobsch_dodel)
-    {
-        $jobsch_iconlist = "<select name='jobsch_caticon' class='tbox'>";
-        if ($handle = opendir("./images/icons"))
-        {
-            $jobsch_iconlist .= "<option value=\"\"> </option>";
-            while (false !== ($file = readdir($handle)))
-            {
-                if ($file <> "." && $file <> "..")
-                {
-
-                    $jobsch_iconlist .= "<option value=\"" . $file . "\" " .
-                    ($file == $jobsch_caticon ? " selected " : " ") . ">" . $file . "</option>";
-                }
-            }
-
-            closedir($handle);
-        }
-        $jobsch_iconlist .= "</select>";
-        $jobsch_text .= "
-		<form id='myclassupdate' method='post' action='" . e_SELF . "'>
-
-		<table style='width:97%;' class='fborder'>
-		<tr><td colspan='2' class='fcaption'>" . JOBSCH_A17 . "
-		<input type='hidden' value='$jobsch_id' name='jobsch_id' />
-		<input type='hidden' value='update' name='jobsch_action' /></td></tr>
-		$jobsch_msg
-		<tr><td style='width:20%;vertical-align:top;' class='forumheader3'>" . JOBSCH_A25 . "</td><td  class='forumheader3'><input type='text' class='tbox' name='jobsch_catname' style='width:40%'  value='$jobsch_catname' /></td></tr>
-		<tr><td style='width:20%;vertical-align:top;' class='forumheader3'>" . JOBSCH_A26 . "</td><td  class='forumheader3'><textarea rows='6' cols='50' class='tbox' name='jobsch_catdesc' >$jobsch_catdesc</textarea><br /></td></tr>
-		<tr><td style='width:20%;vertical-align:top;' class='forumheader3'>" . JOBSCH_A27 . "</td><td style='width:70%' class='forumheader3'>" . r_userclass("jobsch_catclass", $jobsch_catclass, "off", 'public, nobody, member, admin, classes') . "
-		<tr><td style='width:20%;vertical-align:top;' class='forumheader3'>" . JOBSCH_95 . "</td><td  class='forumheader3'>" . $jobsch_iconlist . "</td></tr>
-		<tr><td colspan='2' class='fcaption'><input type='submit' name='submits' value='" . JOBSCH_A24 . "' class='tbox' /></td></tr>
-		</table></form>";
-    }
-}
-if (!$jobsch_edit)
-{
-    // Get the category names to display in combo box
-    // then display actions available
-    $jobsch_yes=false;
-    if ($sql2->db_Select("jobsch_cats", "jobsch_catid,jobsch_catname", " order by jobsch_catname", "nowhere"))
-    {
-    $jobsch_yes=true;
-        while ($jobsch_row = $sql2->db_Fetch())
-        {
-            #extract($jobsch_row);
-            $jobsch_catopt .= "<option value='".$jobsch_row['jobsch_catid']."'" .
-            ($jobsch_id == $jobsch_row['jobsch_catid']?" selected='selected'":"") . ">".$jobsch_row['jobsch_catname']."</option>";
-        }
-    }
-    else
-    {
-        $jobsch_catopt .= "<option value='0'>" . JOBSCH_A18 . "</option>";
-    }
-
-    $jobsch_text .= "
-	<form id='myjobschform' method='post' action='" . e_SELF . "'>
-
-	<table width='97%' class='fborder'>
-	<tr><td colspan='2' class='fcaption'>" . JOBSCH_A3 . "	<input type='hidden' value='dothings' name='jobsch_action' /></td></tr>
-	$jobsch_msg
-	<tr><td style='width:20%;' class='forumheader3'>" . JOBSCH_A3 . "</td><td  class='forumheader3'>
-	<select name='jobsch_selcat' class='tbox'>$jobsch_catopt</select></td></tr>
-	<tr><td style='width:20%;' class='forumheader3'>" . JOBSCH_A19 . "</td><td  class='forumheader3'>
-	<input type='radio' name='jobsch_recdel' value='1' ".($jobsch_yes?"checked='checked'":"disabled='disabled'")." /> " . JOBSCH_A20 . "<br />
-	<input type='radio' name='jobsch_recdel' value='2' ".(!$jobsch_yes?"checked='checked'":"")."/> " . JOBSCH_A21 . "<br />
-	<input type='radio' name='jobsch_recdel' value='3' /> " . JOBSCH_A22 . "
-	<input type='checkbox' name='jobsch_okdel' value='1' />" . JOBSCH_A23 . "</td></tr>
-	<tr><td colspan='2' class='fcaption'>
-	<input type='submit' name='submits' value='" . JOBSCH_A24 . "' class='tbox' /></td></tr>
-
-
-	</table></form>";
-}
-
-$ns->tablerender(JOBSCH_A1, $jobsch_text);
+e107::getAdminUI()->runPage();
 
 require_once(e_ADMIN . "footer.php");
-
-?>
+exit;
