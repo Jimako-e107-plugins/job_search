@@ -20,6 +20,12 @@ class job_search_adminArea extends e_admin_dispatcher
 		),
 
 
+		'sub'	=> array(
+			'controller' 	=> 'jobsch_subcats_ui',
+			'path' 			=> null,
+			'ui' 			=> 'jobsch_subcats_form_ui',
+			'uipath' 		=> null
+		),
 	);
 
 
@@ -29,6 +35,9 @@ class job_search_adminArea extends e_admin_dispatcher
 
 		'cat/list'			=> array('caption' => LAN_MANAGE, 'perm' => 'P'),
 		'cat/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
+
+		'sub/list'			=> array('caption' => LAN_MANAGE, 'perm' => 'P'),
+		'sub/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
 
 	);
 
@@ -54,7 +63,7 @@ class job_search_adminArea extends e_admin_dispatcher
 		$var['admin_cat']['link'] = "admin_cat.php?mode=cat&action=list";
 
 		$var['admin_sub']['text'] = JOBSCH_A4;
-		$var['admin_sub']['link'] = "admin_sub.php";
+		$var['admin_sub']['link'] = "admin_sub.php?mode=sub&action=list";
 
 		$var['admin_local']['text'] = JOBSCH_A130;
 		$var['admin_local']['link'] = "admin_local.php";

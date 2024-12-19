@@ -20,7 +20,7 @@ jobsch_locality int(10) unsigned NOT NULL default '0',
 jobsch_lastnews int(10) unsigned NOT NULL default '0',
 jobsch_empref varchar(30) default NULL,
 PRIMARY KEY  (jobsch_cid)
-) ENGINE=InnoDB;,
+) ENGINE=InnoDB;
 CREATE TABLE jobsch_cats (
 jobsch_catid int(10) NOT NULL auto_increment,
 jobsch_catname varchar(250) default NULL,

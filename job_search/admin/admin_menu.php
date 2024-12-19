@@ -22,7 +22,7 @@ $var['admin_config']['text'] = JOBSCH_A2;
 $var['admin_config']['link'] = "admin_config.php";
 
 $var['admin_cat']['text'] = JOBSCH_A3;
-$var['admin_cat']['link'] = "admin_cat.php";
+$var['admin_cat']['link'] = "admin_cat.php?mode=cat&action=list";
 
 $var['admin_sub']['text'] = JOBSCH_A4;
 $var['admin_sub']['link'] = "admin_sub.php";
