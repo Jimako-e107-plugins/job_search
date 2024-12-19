@@ -19,172 +19,131 @@ else
 {
     include_once(e_PLUGIN . "job_search/languages/admin/English.php");
 }
-# require_once(e_HANDLER . "userclass_class.php");
+
+
+include_once(e_PLUGIN . "job_search/admin/left_menu.php");
+
+
+class jobsch_locals_ui extends e_admin_ui
+{
+
+	protected $pluginTitle		= 'Job Search';
+	protected $pluginName		= 'job_search';
+	//	protected $eventName		= 'job_search-'; // remove comment to enable event triggers in admin. 		
+	protected $table			= 'jobsch_locals';
+	protected $pid				= 'jobsch_localid';
+	protected $perPage			= 10;
+	protected $batchDelete		= true;
+	protected $batchExport     = true;
+	protected $batchCopy		= true;
+
+	//	protected $sortField		= 'somefield_order';
+	//	protected $sortParent      = 'somefield_parent';
+	//	protected $treePrefix      = 'somefield_title';
+
+	//	protected $tabs				= array('tab1'=>'Tab 1', 'tab2'=>'Tab 2'); // Use 'tab'=>'tab1'  OR 'tab'=>'tab2' in the $fields below to enable. 
+
+	//	protected $listQry      	= "SELECT * FROM `#tableName` WHERE field != '' "; // Example Custom Query. LEFT JOINS allowed. Should be without any Order or Limit.
+
+	protected $listOrder		= 'jobsch_localid DESC';
+
+	protected $fields 		= array(
+		'checkboxes'              => array('title' => '', 'type' => null, 'data' => null, 'width' => '5%', 'thclass' => 'center', 'forced' => 'value', 'class' => 'center', 'toggle' => 'e-multiselect', 'readParms' => [], 'writeParms' => [],),
+		'jobsch_localid'          => array('title' => LAN_ID, 'type' => 'number', 'data' => 'int', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'jobsch_localname'        => array('title' => JOBSCH_A123, 'type' => 'text', 'data' => 'safestr', 'width' => 'auto', 'validate' => true, 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'jobsch_localflag'        => array('title' => JOBSCH_95, 'type' => 'icon', 'data' => 'safestr', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'options'                 => array('title' => LAN_OPTIONS, 'type' => null, 'data' => null, 'width' => '10%', 'thclass' => 'center last', 'class' => 'center last', 'forced' => 'value', 'readParms' => [], 'writeParms' => [],),
+	);
+
+	protected $fieldpref = array('jobsch_localid', 'jobsch_localname', 'jobsch_localflag');
+
+
+	//	protected $preftabs        = array('General', 'Other' );
+	protected $prefs = array();
+
+
+	function AddButton()
+	{
+		$text = "</fieldset></form><div class='e-container'>
+      <table  style='" . ADMIN_WIDTH . "' class='table adminlist table-striped'>";
+		$text .=
+			'<a href="admin_local.php?mode=local&action=create"  
+      class="btn batch e-hide-if-js btn-success"><span>' . JOBSCH_A21 . '</span></a>';
+		$text .= "</td></tr></table></div><form><fieldset>";
+		return $text;
+	}
+
+
+	public function init()
+	{
+
+		$this->postFilterMarkup = $this->AddButton();
+	}
+
+	// ------- Customize Create --------
+
+    // function beforeDelete() {
+	// 	define("JOBSCH_A124","Locality in use - can not delete");
+ 
+
+	// }
+
+
+	public function beforeCreate($new_data, $old_data)
+	{
+		return $new_data;
+	}
+
+	public function afterCreate($new_data, $old_data, $id)
+	{
+		// do something
+	}
+
+	public function onCreateError($new_data, $old_data)
+	{
+		// do something		
+	}
+
+
+	// ------- Customize Update --------
+
+	public function beforeUpdate($new_data, $old_data, $id)
+	{
+		return $new_data;
+	}
+
+	public function afterUpdate($new_data, $old_data, $id)
+	{
+		// do something	
+	}
+
+	public function onUpdateError($new_data, $old_data, $id)
+	{
+		// do something		
+	}
+
+	// left-panel help menu area. (replaces e_help.php used in old plugins)
+	public function renderHelp()
+	{
+		$caption = LAN_HELP;
+		$text = 'Some help text';
+
+		return array('caption' => $caption, 'text' => $text);
+	}
+
+ 
+}
+
+
+
+class jobsch_locals_form_ui extends e_admin_form_ui
+{
+}
+
+new job_search_adminArea();
+
 require_once(e_ADMIN . "auth.php");
-
-$jobsch_action = $_POST['jobsch_action'];
-$jobsch_edit = false;
-// * If we are updating then update or insert the record
-if ($jobsch_action == 'update')
-{
-    $jobsch_id = $_POST['jobsch_id'];
-    if ($jobsch_id == 0)
-    {
-        // New record so add it
-        $jobsch_args = "
-		'0',
-		'" . $tp->toDB($_POST['jobsch_localname']) . "',
-		'" . $tp->toDB($_POST['jobsch_localflag']) . "'";
-        if ($sql->db_Insert("jobsch_locals", $jobsch_args))
-        {
-            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A28 . "</strong></td></tr>";
-        }
-    }
-    else
-    {
-        // Update existing
-        $jobsch_args = "
-		jobsch_localname='" . $tp->toDB($_POST['jobsch_localname']) . "',
-		jobsch_localflag='" . $tp->toDB($_POST['jobsch_localflag']) . "'
-		where jobsch_localid='$jobsch_id'";
-        if ($sql->db_Update("jobsch_locals", $jobsch_args))
-        {
-            // Changes saved
-            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><b>" . JOBSCH_A28 . "</b></td></tr>";
-        }
-    }
-}
-// We are creating, editing or deleting a record
-if ($jobsch_action == 'dothings')
-{
-    $jobsch_id = $_POST['jobsch_selcat'];
-    $jobsch_do = $_POST['jobsch_recdel'];
-    $jobsch_dodel = false;
-
-    switch ($jobsch_do)
-    {
-        case '1': // Edit existing record
-            {
-                // We edit the record
-                $sql->db_Select("jobsch_locals", "*", "jobsch_localid='$jobsch_id'");
-                $jobsch_row = $sql->db_Fetch() ;
-                extract($jobsch_row);
-                $jobsch_edit = true;
-                break;
-            }
-        case '2': // New category
-            {
-                // Create new record
-                $jobsch_id = 0;
-                // set all fields to zero/blank
-                $jobsch_edit = true;
-                break;
-            }
-        case '3':
-            {
-                // delete the record
-                if ($_POST['jobsch_okdel'] == '1')
-                {
-                    if ($sql->db_Select("jobsch_ads", "jobsch_cid", " where jobsch_locality='$jobsch_id'", "nowhere"))
-                    {
-                        $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A124 . "</strong></td></tr>";
-                    }
-                    else
-                    {
-                        if ($sql->db_Delete("jobsch_locals", " jobsch_localid='$jobsch_id'"))
-                        {
-                            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A125 . "</strong></td></tr>";
-                        }
-                        else
-                        {
-                            $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A126 . "</strong></td></tr>";
-                        }
-                    }
-                }
-                else
-                {
-                    $jobsch_msg .= "<tr><td class='forumheader3' colspan='2'><strong>" . JOBSCH_A32 . "</strong></td></tr>";
-                }
-
-                $jobsch_dodel = true;
-                $jobsch_edit = false;
-            }
-    }
-
-    if (!$jobsch_dodel)
-    {
-        $jobsch_iconlist = "<select name='jobsch_localflag' class='tbox'>";
-        if ($handle = opendir("./images/icons"))
-        {
-            $jobsch_iconlist .= "<option value=\"\"> </option>";
-            while (false !== ($file = readdir($handle)))
-            {
-                if ($file <> "." && $file <> "..")
-                {
-                    $jobsch_iconlist .= "<option value=\"" . $file . "\" " .
-                    ($file == $jobsch_localflag ? " selected " : " ") . ">" . $file . "</option>";
-                }
-            }
-
-            closedir($handle);
-        }
-        $jobsch_iconlist .= "</select>";
-        $jobsch_text .= "
-		<form id='myclassupdate' method='post' action='" . e_SELF . "'>
-
-		<table style='width:97%;' class='fborder'>
-		<tr><td colspan='2' class='fcaption'>" . JOBSCH_A121 . "
-		<input type='hidden' value='$jobsch_id' name='jobsch_id' />
-		<input type='hidden' value='update' name='jobsch_action' /></td></tr>
-		$jobsch_msg
-		<tr><td style='width:20%;vertical-align:top;' class='forumheader3'>" . JOBSCH_A123 . "</td><td  class='forumheader3'><input type='text' class='tbox' name='jobsch_localname' style='width:40%' value='$jobsch_localname' /></td></tr>";
-        # <tr><td style='width:20%;vertical-align:top;' class='forumheader3'>" . JOBSCH_95 . "</td><td  class='forumheader3'>" . $jobsch_iconlist . "</td></tr>
-        $jobsch_text .= "<tr><td colspan='2' class='fcaption'><input type='submit' name='submits' value='" . JOBSCH_A24 . "' class='tbox' /></td></tr>
-		</table></form>";
-    }
-}
-if (!$jobsch_edit)
-{
-    // Get the category names to display in combo box
-    // then display actions available
-    $jobsch_yes = false;
-    if ($sql2->db_Select("jobsch_locals", "jobsch_localid,jobsch_localname", " order by jobsch_localname", "nowhere"))
-    {
-        $jobsch_yes = true;
-        while ($jobsch_row = $sql2->db_Fetch())
-        {
-            # extract($jobsch_row);
-            $jobsch_catopt .= "<option value='" . $jobsch_row['jobsch_localid'] . "'" .
-            ($jobsch_id == $jobsch_row['jobsch_localid']?" selected='selected'":"") . ">" . $jobsch_row['jobsch_localname'] . "</option>";
-        }
-    }
-    else
-    {
-        $jobsch_catopt .= "<option value='0'>" . JOBSCH_A122 . "</option>";
-    }
-
-    $jobsch_text .= "
-	<form id='jobschform' method='post' action='" . e_SELF . "'>
-
-	<table width='97%' class='fborder'>
-	<tr><td colspan='2' class='fcaption'>" . JOBSCH_A121 . "	<input type='hidden' value='dothings' name='jobsch_action' /></td></tr>
-	$jobsch_msg
-	<tr><td style='width:20%;' class='forumheader3'>" . JOBSCH_A121 . "</td><td  class='forumheader3'>
-	<select name='jobsch_selcat' class='tbox'>$jobsch_catopt</select></td></tr>
-	<tr><td style='width:20%;' class='forumheader3'>" . JOBSCH_A19 . "</td><td  class='forumheader3'>
-	<input type='radio' name='jobsch_recdel' value='1' " . ($jobsch_yes?"checked='checked'":"disabled='disabled'") . " /> " . JOBSCH_A20 . "<br />
-	<input type='radio' name='jobsch_recdel' value='2' " . (!$jobsch_yes?"checked='checked'":"") . "/> " . JOBSCH_A21 . "<br />
-	<input type='radio' name='jobsch_recdel' value='3' /> " . JOBSCH_A22 . "
-	<input type='checkbox' name='jobsch_okdel' value='1' />" . JOBSCH_A23 . "</td></tr>
-	<tr><td colspan='2' class='fcaption'>
-	<input type='submit' name='submits' value='" . JOBSCH_A24 . "' class='tbox' /></td></tr>
-
-
-	</table></form>";
-}
-
-$ns->tablerender(JOBSCH_A1, $jobsch_text);
+e107::getAdminUI()->runPage();
 
 require_once(e_ADMIN . "footer.php");
-
-?>
+exit;

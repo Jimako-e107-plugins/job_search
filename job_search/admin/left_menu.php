@@ -26,6 +26,13 @@ class job_search_adminArea extends e_admin_dispatcher
 			'ui' 			=> 'jobsch_subcats_form_ui',
 			'uipath' 		=> null
 		),
+
+		'local'	=> array(
+			'controller' 	=> 'jobsch_locals_ui',
+			'path' 			=> null,
+			'ui' 			=> 'jobsch_locals_form_ui',
+			'uipath' 		=> null
+		),
 	);
 
 
@@ -33,11 +40,14 @@ class job_search_adminArea extends e_admin_dispatcher
 
 		'main/prefs' 		=> array('caption' => JOBSCH_A2, 'perm' => 'P'),
 
-		'cat/list'			=> array('caption' => LAN_MANAGE, 'perm' => 'P'),
+		'cat/list'			=> array('caption' => JOBSCH_A3, 'perm' => 'P'),
 		'cat/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
 
-		'sub/list'			=> array('caption' => LAN_MANAGE, 'perm' => 'P'),
+		'sub/list'			=> array('caption' => JOBSCH_A4, 'perm' => 'P'),
 		'sub/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
+
+		'local/list'			=> array('caption' => JOBSCH_A130, 'perm' => 'P'),
+		'local/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
 
 	);
 
@@ -66,7 +76,7 @@ class job_search_adminArea extends e_admin_dispatcher
 		$var['admin_sub']['link'] = "admin_sub.php?mode=sub&action=list";
 
 		$var['admin_local']['text'] = JOBSCH_A130;
-		$var['admin_local']['link'] = "admin_local.php";
+		$var['admin_local']['link'] = "admin_local.php?mode=local&action=list";
 
 		$var['admin_ad']['text'] = JOBSCH_A54;
 		$var['admin_ad']['link'] = "admin_ad.php";

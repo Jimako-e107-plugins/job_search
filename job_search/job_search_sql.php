@@ -28,20 +28,20 @@ jobsch_catdesc varchar(250) default NULL,
 jobsch_catclass int(10) unsigned NOT NULL default '0',
 jobsch_caticon varchar(50) default '',
 PRIMARY KEY  (jobsch_catid)
-) ENGINE=InnoDB;,
+) ENGINE=InnoDB;
 CREATE TABLE jobsch_subcats (
 jobsch_subid int(10) NOT NULL auto_increment,
 jobsch_categoryid int(10) unsigned NOT NULL default '0',
 jobsch_subname varchar(250) default NULL,
 jobsch_subicon varchar(50) default NULL,
 PRIMARY KEY  (jobsch_subid)
-) ENGINE=InnoDB;,
+) ENGINE=InnoDB;
 CREATE TABLE jobsch_locals (
 jobsch_localid int(10) NOT NULL auto_increment,
 jobsch_localname varchar(250) default NULL,
 jobsch_localflag varchar(50) default NULL,
 PRIMARY KEY  (jobsch_localid)
-) ENGINE=InnoDB;,
+) ENGINE=InnoDB;
 CREATE TABLE jobsch_subs (
 jobsch_subid int(10) NOT NULL auto_increment,
 jobsch_subuserid int(10) unsigned NOT NULL default '0',

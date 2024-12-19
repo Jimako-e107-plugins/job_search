@@ -119,7 +119,7 @@ define("JOBSCH_A117","Use Counter");
 define("JOBSCH_A118","Disable Counters");
 define("JOBSCH_A119","User selects Counters");
 define("JOBSCH_A120","Use Drop Down for Sub Category");
-define("JOBSCH_A121","Check for Updates");
+ 
 
 
 define("JOBSCH_92","Unable to upload Document");
@@ -135,7 +135,7 @@ define("JOBSCH_A125","Locality Deleted");
 define("JOBSCH_A126","Unable to delete locality");
 define("JOBSCH_A127","Company");
 define("JOBSCH_A128","Location");
-define("JOBSCH_A129","Check for Updates");
+ 
 define("JOBSCH_A130","Administer Localities");
 define("JOBSCH_A131","Newsletter subscriptions");
 define("JOBSCH_A132","Newsletter");

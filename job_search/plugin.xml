@@ -10,6 +10,9 @@
 	</keywords>
 	<category>content</category>
 	<copyright>Jimako</copyright>
+    <siteLinks>
+		<link url="{e_PLUGIN}job_search/jobshack.php" sef='index' perm='everyone' lan=''>Job Shack</link>
+	</siteLinks>
 	<adminLinks>
 		<link url="admin/admin_config.php" description="" icon="images/icon_32.png" iconSmall="images/icon_16.png" icon128="images/icon_32png" primary="true" >LAN_CONFIGURE</link>
   </adminLinks>
