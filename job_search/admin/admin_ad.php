@@ -28,6 +28,8 @@ require_once(e_PLUGIN . "job_search/handlers/calendar/calendar_class.php");
 $jobsch_cal = new DHTML_Calendar(true);
 
 $jobsch_text .= $jobsch_cal->load_files();
+$pluginPrefs = e107::pref('job_search');
+
 
 require_once(e_HANDLER . "userclass_class.php");
 require_once(e_HANDLER . "ren_help.php");
@@ -44,10 +46,11 @@ if (e_QUERY) {
 	$action="godo";
 	$catid=e_QUERY;
 }
-if (empty($pref['jobsch_dform']))
+if (empty($pluginPrefs['jobsch_dform']))
 {
-    $pref['jobsch_dform'] = "d-m-Y";
-    save_prefs();
+	//$xprefs['jobsch_dform'] = "d-m-Y";
+    //save_xprefs();
+	e107::getPref()->set('jobsch', 'jobsch_dform', "d-m-Y");
 }
 if ($actvar == "delete")
 {

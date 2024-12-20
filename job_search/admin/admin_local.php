@@ -64,19 +64,28 @@ class jobsch_locals_ui extends e_admin_ui
 
 	function AddButton()
 	{
-		$text = "</fieldset></form><div class='e-container'>
-      <table  style='" . ADMIN_WIDTH . "' class='table adminlist table-striped'>";
-		$text .=
-			'<a href="admin_local.php?mode=local&action=create"  
-      class="btn batch e-hide-if-js btn-success"><span>' . JOBSCH_A21 . '</span></a>';
-		$text .= "</td></tr></table></div><form><fieldset>";
+		$mode = $this->getRequest()->getMode();
+
+		$text = "</fieldset>
+			</form>
+			<div class='e-container'>
+      			<table  style='" . ADMIN_WIDTH . "' class='table adminlist table-striped'>
+					<tr>
+						<td>";
+		$text .=			'<a href="' . e_SELF . '?mode=' . $mode . '&action=create" class="btn batch e-hide-if-js btn-success"><span>' . LAN_CREATE . '</span></a>';
+		$text .= "		</td>
+					</tr>
+				</table>
+			</div>
+			<form>
+				<fieldset>";
 		return $text;
 	}
 
 
 	public function init()
 	{
-
+		$this->getRequest()->setMode('local');
 		$this->postFilterMarkup = $this->AddButton();
 	}
 

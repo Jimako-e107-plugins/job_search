@@ -27,8 +27,11 @@ else
     include_once(e_PLUGIN . "job_search/languages/English.php");
 }
 require_once(e_ADMIN . "auth.php");
-$jobsch_conv = new convert;
 
+$jobsch_conv = new convert;
+ 
+$pluginPrefs = e107::pref('job_search');
+ 
 if (isset($_REQUEST['jobsch_donews']))
 {
     // get the list of subscribers
@@ -37,7 +40,7 @@ if (isset($_REQUEST['jobsch_donews']))
     require_once(e_HANDLER . "mail.php");
     // Create message
     require_once("jobsearch_shortcodes.php");
-    require_once("./newsletter/newsletter_template.php");
+    require_once("../../newsletter/newsletter_template.php");
     $month = date("m");
     $day = date("j");
     $year = date("Y");
@@ -58,10 +61,10 @@ if (isset($_REQUEST['jobsch_donews']))
                 left join #jobsch_cats as c on s.jobsch_categoryid=c.jobsch_catid
                 left join #jobsch_locals as l on r.jobsch_locality=l.jobsch_localid
                 where
-				(jobsch_lastnews = 0 or  jobsch_lastnews < '" . $pref['jobsch_lastnews'] . "')
+				(jobsch_lastnews = 0 or  jobsch_lastnews < '" . $pluginPrefs['jobsch_lastnews'] . "')
 				and find_in_set(jobsch_catclass, '" . USERCLASS_LIST . "')" .
-            ($pref['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate = '' or jobsch_closedate is null or jobsch_closedate > $jobsch_today)
-                order by jobsch_postdate " . $tp->toFORM($pref['jobsch_sort']) ;
+            ($pluginPrefs['jobsch_approval'] == 1?" and jobsch_approved > 0":"") . " and (jobsch_closedate = 0 or jobsch_closedate = '' or jobsch_closedate is null or jobsch_closedate > $jobsch_today)
+                order by jobsch_postdate " . $tp->toFORM($pluginPrefs['jobsch_sort']) ;
             $jobsch_counter = $sql2->db_Select_gen($jobsch_arg2, false);
             if ($jobsch_counter)
             {
@@ -72,7 +75,7 @@ if (isset($_REQUEST['jobsch_donews']))
                     $message .= $tp->parsetemplate($JOBSCH_NEWS_DETAIL, false, $jobsearch_shortcodes);
                 } // while
                 $message .= $tp->parsetemplate($JOBSCH_NEWS_FOOTER, false, $jobsearch_shortcodes);
-                $jobsch_emalok = sendemail($user_email, "Newsletter", $message, $user_loginname, $pref['jobsch_sysemail'], $pref['jobsch_sysfrom']);
+                $jobsch_emalok = sendemail($user_email, "Newsletter", $message, $user_loginname, $pluginPrefs['jobsch_sysemail'], $pluginPrefs['jobsch_sysfrom']);
                 if ($jobsch_emalok)
                 {
                     $jobsch_yescount++;
@@ -94,8 +97,10 @@ if (isset($_REQUEST['jobsch_donews']))
         {
             $jobsch_upok = JOBSCH_A150;
         }
-        $pref['jobsch_lastnews'] = $jobsch_now;
-        save_prefs();
+        //$xpref['jobsch_lastnews'] = $jobsch_now;
+        //save_xprefs();
+		e107::getPref()->set('jobsch', 'jobsch_lastnews', $jobsch_now);
+
         // Send Emails
         $jobsch_text .= "<table class='fborder' style='width:97%'>
         <tr><td class='fcaption'>" . JOBSCH_A133 . "</td></tr>
@@ -108,11 +113,11 @@ if (isset($_REQUEST['jobsch_donews']))
 else
 {
     $jobsch_count = $sql->db_Count("jobsch_subs", "(*)");
-    $jobsch_vacancies = $sql->db_Count("jobsch_ads", "(*)", "where jobsch_lastnews = 0 or jobsch_lastnews <'" . $pref['jobsch_lastnews'] . "'",false);
+    $jobsch_vacancies = $sql->db_Count("jobsch_ads", "(*)", "where jobsch_lastnews = 0 or jobsch_lastnews <'" . $pluginPrefs['jobsch_lastnews'] . "'",false);
     $jobsch_text .= "<form id=jobsch_news' method='post' action='" . e_SELF . "' >
 <table class='fborder' style='width:97%'>
 <tr><td class='fcaption'>" . JOBSCH_A133 . "</td></tr>
-<tr><td class='forumheader3'>" . JOBSCH_A136 . " " . ($pref['jobsch_lastnews'] > 0?$jobsch_conv->convert_date($pref['jobsch_lastnews']):JOBSCH_A137) . "</td></tr>
+<tr><td class='forumheader3'>" . JOBSCH_A136 . " " . ($pluginPrefs['jobsch_lastnews'] > 0?$jobsch_conv->convert_date($pluginPrefs['jobsch_lastnews']):JOBSCH_A137) . "</td></tr>
 <tr><td class='forumheader3'>" . JOBSCH_A134 . " $jobsch_count " . JOBSCH_A138 . " " .
     JOBSCH_A139 . " " . $jobsch_vacancies . " " . JOBSCH_A140 . " </td></tr>
 <tr><td class='fcaption'><input class='tbox' type='submit' name='jobsch_donews' value='" . JOBSCH_A135 . "' /></td></tr>

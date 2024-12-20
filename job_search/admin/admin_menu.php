@@ -28,7 +28,7 @@ $var['admin_sub']['text'] = JOBSCH_A4;
 $var['admin_sub']['link'] = "admin_sub.php?mode=sub&action=list";
 
 $var['admin_local']['text'] = JOBSCH_A130;
-$var['admin_local']['link'] = "admin_local.php";
+$var['admin_local']['link'] = "admin_local.php?mode=local&action=list";
 
 $var['admin_ad']['text'] = JOBSCH_A54;
 $var['admin_ad']['link'] = "admin_ad.php";

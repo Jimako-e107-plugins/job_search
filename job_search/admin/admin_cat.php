@@ -65,6 +65,8 @@ class jobsch_cats_ui extends e_admin_ui
 
 	public function init()
 	{
+		$this->getRequest()->setMode('cat');
+
 		$this->fields['jobsch_catname']['writeParms']['size'] = 'block-level'  ;
 		$this->fields['jobsch_catdesc']['writeParms']['size'] = 'block-level';
 		$this->postFilterMarkup = $this->AddButton();
@@ -72,12 +74,21 @@ class jobsch_cats_ui extends e_admin_ui
 
 	function AddButton()
 	{
-		$text = "</fieldset></form><div class='e-container'>
-      <table  style='" . ADMIN_WIDTH . "' class='table adminlist table-striped'>";
-		$text .=
-			'<a href="admin_cat.php?mode=cat&action=create"  
-      class="btn batch e-hide-if-js btn-success"><span>'. JOBSCH_A21.'</span></a>';
-		$text .= "</td></tr></table></div><form><fieldset>";
+		$mode = $this->getRequest()->getMode();
+
+		$text = "</fieldset>
+			</form>
+			<div class='e-container'>
+      			<table  style='" . ADMIN_WIDTH . "' class='table adminlist table-striped'>
+					<tr>
+						<td>";
+		$text .=			'<a href="' . e_SELF . '?mode=' . $mode . '&action=create" class="btn batch e-hide-if-js btn-success"><span>' . LAN_CREATE . '</span></a>';
+		$text .= "		</td>
+					</tr>
+				</table>
+			</div>
+			<form>
+				<fieldset>";
 		return $text;
 	}
 	
