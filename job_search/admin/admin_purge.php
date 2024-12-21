@@ -85,8 +85,8 @@ $jobsch_text .= "
 <td class='forumheader2' style='width:30%;'><span class='smalltext'>" . JOBSCH_A85 . "</span></td>
 <td class='forumheader2' style='width:30%;'><span class='smalltext'>" . JOBSCH_A86 . "</span></td>
 <td class='forumheader2' style='width:20%;'><span class='smalltext'>" . JOBSCH_A73 . "</span></td>
-<td class='forumheader2' style='width:10%;text-align:center;'><img src='./images/approve.gif' alt='" . JOBSCH_A83 . "' title='" . JOBSCH_A83 . "' /></td>
-<td class='forumheader2' style='width:10%;text-align:center;'><img src='./images/delete.gif' alt='" . JOBSCH_A84 . "' title='" . JOBSCH_A84 . "' /></td>
+<td class='forumheader2' style='width:10%;text-align:center;'><img src='" . e_PLUGIN ."/job_search/images/approve.gif' alt='" . JOBSCH_A83 . "' title='" . JOBSCH_A83 . "' /></td>
+<td class='forumheader2' style='width:10%;text-align:center;'><img src='" . e_PLUGIN . "/job_search/images/delete.gif' alt='" . JOBSCH_A84 . "' title='" . JOBSCH_A84 . "' /></td>
 </tr>";
 $jobsch_today = mktime(0, 0, 0, date("n", time()), date("j", time()), date("Y", time()));
 if ($sql->db_Select("jobsch_ads", "*", "where jobsch_closedate>'0' and jobsch_closedate<" . $jobsch_today, "nowhere"))

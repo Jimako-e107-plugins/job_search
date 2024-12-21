@@ -6,6 +6,10 @@ if (!defined('e107_INIT'))
 include_once(e_HANDLER . 'shortcode_handler.php');
 $jobsearch_shortcodes = $tp->e_sc->parse_scbatch(__FILE__);
 
+$pluginPref = e107::pref('job_search');
+
+if (!defined('IMODE')) define('IMODE', 'lite');
+
 /*
 
 SC_BEGIN JOBPOSTER
@@ -23,7 +27,7 @@ return $retval;
 
 SC_END
 SC_BEGIN JOBLOCALITY
-global $pref, $tp, $jobsch_localname;
+global $pluginPref, $tp, $jobsch_localname;
 if (empty($jobsch_localname))
 {
     $retval = JOBSCH_101;
@@ -35,7 +39,7 @@ else
 return $retval;
 SC_END
 SC_BEGIN JOBVIEWS
-global $pref, $tp, $jobsch_counter, $jobsch_views;
+global $pluginPref, $tp, $jobsch_counter, $jobsch_views;
 if ($pluginPref['jobsch_counter'] != "NONE")
 {
     // counter is available for all ads
@@ -99,7 +103,7 @@ else
 SC_END
 
 SC_BEGIN JOBSUBLIST
-global $tp, $pref, $jobsch_today, $jobsch_local, $jobsch_catid, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_tmp, $jobsch_local;
+global $tp, $pluginPref, $jobsch_today, $jobsch_local, $jobsch_catid, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_tmp, $jobsch_local;
 $jobsch_db1 = new DB;
 $jobsch_db2 = new DB;
 if ($jobsch_db1->db_Select("jobsch_subcats", "*", "jobsch_categoryid=$jobsch_catid  order by jobsch_subname"))
@@ -239,7 +243,7 @@ return $retval;
 SC_END
 
 SC_BEGIN CURRENCY_SYMBOL
-global $pref, $tp;
+global $pluginPref, $tp;
 return $tp->toHTML($pluginPref['jobsch_currency']);
 SC_END
 
@@ -341,7 +345,7 @@ return $retval;
 SC_END
 
 SC_BEGIN JOBDOWNLOAD
-global $pref, $tp, $jobsch_document;
+global $pluginPref, $tp, $jobsch_document;
 if (!empty($jobsch_document))
 {
 	switch ($pluginPref['jobsch_pictype'])
@@ -371,7 +375,7 @@ return $retval;
 SC_END
 
 SC_BEGIN JOBTERMS
-global $pref, $tp;
+global $pluginPref, $tp;
 return $tp->toHTML($pluginPref['jobsch_terms'], true) ;
 SC_END
 
@@ -381,7 +385,7 @@ return "<img src='./images/logo.png' alt='logo' style='border:0;'/>";
 SC_END
 
 SC_BEGIN JOBUPPAGE
-global $tp, $pref, $jobsch_from, $jobsch_action, $jobsch_catid, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
+global $tp, $pluginPref, $jobsch_from, $jobsch_action, $jobsch_catid, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
 switch ($jobsch_action)
 {
     case "sub":
@@ -444,7 +448,7 @@ else
 SC_END
 
 SC_BEGIN JOBMANAGE
-global $pref, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
+global $pluginPref, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
 if (USER && check_class($pluginPref['jobsch_create']))
 {
     if ($parm == "button")
@@ -464,7 +468,7 @@ else
 return $retval;
 SC_END
 SC_BEGIN JOB_NEXTPREV
-global $tp, $jobsch_catid, $jobsch_subid, $mycId, $jobsch_count, $pref, $jobsch_from, $jobsch_local;
+global $tp, $jobsch_catid, $jobsch_subid, $mycId, $jobsch_count, $pluginPref, $jobsch_from, $jobsch_local;
 $jobsch_npaction = "list.$jobsch_catid.$jobsch_subid.$mycId.0.$jobsch_local";
 $jobsch_npparms = $jobsch_count . "," . $pluginPref['jobsch_perpage'] . "," . $jobsch_from . "," . e_SELF . '?' . "[FROM]." . $jobsch_npaction;
 $jobsch_nextprev = $tp->parseTemplate("{NEXTPREV={$jobsch_npparms}}") . "";
@@ -472,7 +476,7 @@ return $jobsch_nextprev;
 
 SC_END
 SC_BEGIN JOBSUBSCRIBE
-global $pref, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
+global $pluginPref, $jobsch_from, $jobsch_catid, $jobsch_subid, $jobsch_itemid, $jobsch_local;
 if ($pluginPref['jobsch_subscribe'] > 0 && USER)
 {
     if ($parm == "button")
@@ -510,7 +514,7 @@ return JOBSCH_109;
 SC_END
 
 SC_BEGIN JOB_NUMBER
-global $pref, $jobsch_counter;
+global $pluginPref, $jobsch_counter;
 return $jobsch_counter;
 
 SC_END
@@ -550,7 +554,7 @@ if (empty($parm))
 SC_END
 
 SC_BEGIN JOB_JOBSENDER
-global $pref;
+global $pluginPref;
 return $pluginPref['jobsch_sysfrom'];
 SC_END
 

@@ -71,8 +71,8 @@ $jobsch_text .= "
 <td class='forumheader2' style='width:35%;'><span class='smalltext'>" . JOBSCH_A85 . "</span></td>
 <td class='forumheader2' style='width:35%;'><span class='smalltext'>" . JOBSCH_A86 . "</span></td>
 <td class='forumheader2' style='width:10%;'><span class='smalltext'>" . JOBSCH_A87 . "</span></td>
-<td class='forumheader2' style='width:10%;text-align:center;'><img src='./images/approve.gif' alt='" . JOBSCH_A83 . "' title='" . JOBSCH_A83 . "' /></td>
-<td class='forumheader2' style='width:10%;text-align:center;'><img src='./images/delete.gif' alt='" . JOBSCH_A84 . "' title='" . JOBSCH_A84 . "' /></td>
+<td class='forumheader2' style='width:10%;text-align:center;'><img src='" . e_PLUGIN . "/job_search/images/approve.gif' alt='" . JOBSCH_A83 . "' title='" . JOBSCH_A83 . "' /></td>
+<td class='forumheader2' style='width:10%;text-align:center;'><img src='" . e_PLUGIN . "/job_search/images/delete.gif' alt='" . JOBSCH_A84 . "' title='" . JOBSCH_A84 . "' /></td>
 </tr>";
 
 if ($sql->db_Select("jobsch_ads", "*", "where jobsch_approved='0'", "nowhere"))

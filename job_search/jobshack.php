@@ -18,6 +18,8 @@ else
     include_once(e_PLUGIN . "job_search/languages/English.php");
 }
 
+$pluginPref = e107::pref('job_search');
+ 
 // check if we use the wysiwyg for text areas
 $e_wysiwyg = "jobsch_vacancydetails";
 if ($pluginPref['wysiwyg'])
@@ -29,6 +31,7 @@ require_once("jobsearch_shortcodes.php");
 
 // Check that access is permitted to this plugin
 $jobsch_access = check_class($pluginPref['jobsch_read']) || check_class($pluginPref['jobsch_admin']) || check_class($pluginPref['jobsch_create']);
+ 
 if (!$jobsch_access)
 {
     $jobsch_text = $tp->toHTML(JOBSCH_40);

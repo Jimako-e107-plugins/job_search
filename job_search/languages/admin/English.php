@@ -119,7 +119,7 @@ define("JOBSCH_A117","Use Counter");
 define("JOBSCH_A118","Disable Counters");
 define("JOBSCH_A119","User selects Counters");
 define("JOBSCH_A120","Use Drop Down for Sub Category");
- 
+
 
 
 define("JOBSCH_92","Unable to upload Document");
@@ -174,4 +174,5 @@ define("JOBSCH_A162","Document already uploaded");
 define("JOBSCH_A163","Delete document");
 define("JOBSCH_A164","URL to document");
 define("JOBSCH_A165","Unable to write to documents directory. Check permissions");
-?>
+
+define("JOBSCH_A166", "Please choose unique SEF URL string for this category"); 

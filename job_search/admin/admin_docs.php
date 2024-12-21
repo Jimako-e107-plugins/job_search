@@ -69,7 +69,7 @@ function checkAll(checkWhat) {
 $jobsch_text .= "
 <tr>
 <td class='forumheader2' style='width:90%;'><span class='smalltext'>" . JOBSCH_A104 . "</span></td>
-<td class='forumheader2' style='width:10%;text-align:center;'><img src='./images/delete.gif' alt='" . JOBSCH_A84 . "' title='" . JOBSCH_A84 . "' /></td>
+<td class='forumheader2' style='width:10%;text-align:center;'><img src='" . e_PLUGIN . "/job_search/images/delete.gif' alt='" . JOBSCH_A84 . "' title='" . JOBSCH_A84 . "' /></td>
 </tr>";
 // Get a list of files in directory and see if they are associated with an advert.  If not display in list.
 $dir = "./documents";

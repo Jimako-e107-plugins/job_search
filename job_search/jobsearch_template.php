@@ -16,7 +16,7 @@ if ($pref['jobsch_icons'] > 0)
     {
         $JOBSCH_CAT_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "' class='JOBSCH_CAT_HEADER_icons'>
 		<tr>
 			<td class='forumheader2'  colspan='4' style='width:30%;text-align:left;' ><img src='./images/blank.png' alt='' />&nbsp;</td>
 		</tr>
@@ -60,7 +60,7 @@ else
     {
         $JOBSCH_CAT_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "' class='JOBSCH_CAT_HEADER_no_icons' >
 		<tr>
 			<td class='forumheader2'  colspan='3' style='width:30%;text-align:left;' ><img src='./images/blank.png' alt='' />&nbsp;</td>
 		</tr>
@@ -103,7 +103,7 @@ if ($pref['jobsch_icons'] > 0)
     {
         $JOBSCH_SUB_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "' class='JOBSCH_SUB_HEADER' >
 		<tr>
 			<td class='forumheader2'  colspan='4' style='width:30%;text-align:left;' >{JOBUPPAGE=icon}&nbsp;&nbsp;{JOBCATNAME=nolink}</td>
 		</tr>
@@ -148,7 +148,7 @@ else
     {
         $JOBSCH_SUB_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "' class='JOBSCH_SUB_HEADER' >
 		<tr>
 			<td class='forumheader2'  colspan='3' style='width:30%;text-align:left;' >{JOBUPPAGE=icon}&nbsp;&nbsp;{JOBCATNAME=nolink}</td>
 		</tr>
@@ -190,7 +190,7 @@ if (!isset($JOBSCH_LIST_HEADER))
 {
     $JOBSCH_LIST_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "' class='JOBSCH_LIST_HEADER' >
 		<tr>
 			<td class='forumheader2'  colspan='5' style='width:30%;text-align:left;' >{JOBUPPAGE=icon}&nbsp;&nbsp;{JOBCATNAME=nolink}&nbsp;-&nbsp;{JOBSUBNAME=nolink}</td>
 		</tr>
@@ -238,7 +238,7 @@ if (!isset($JOBSCH_ITEM_HEADER))
     // global $jobsch_catid,$jobsch_subid,$jobsch_itemid,$jobsch_tmp,$jobsch_local;
     $JOBSCH_ITEM_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "'  class='JOBSCH_ITEM_HEADER' >
 		<tr>
 			<td class='forumheader2'  colspan='2' style='width:30%;text-align:left;' >{JOBUPPAGE=icon}&nbsp;&nbsp;{JOBEMAILLINK=icon}&nbsp;&nbsp;{JOBPRINT=icon}</td>
 		</tr>
@@ -334,7 +334,7 @@ if (!isset($JOBSCH_TC_HEADER))
 {
     $JOBSCH_TC_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "' class='JOBSCH_TC_HEADER'>
 	<tr>
 		<td class='fcaption'>" . JOBSCH_41 . "</td>
 	</tr>
@@ -366,7 +366,7 @@ if (!isset($JOBSCH_SUBS_HEADER))
 {
     $JOBSCH_SUBS_HEADER = "
 	<div class='fborder' style='width:" . USER_WIDTH . "' >
-	<table style='width:" . USER_WIDTH . "'>
+	<table style='width:" . USER_WIDTH . "' class='JOBSCH_SUBS_HEADER'>
 	<tr>
 		<td class='fcaption'>" . JOBSCH_106 . "</td>
 	</tr>

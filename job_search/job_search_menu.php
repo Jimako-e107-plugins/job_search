@@ -15,7 +15,7 @@ else
 {
     include_once(e_PLUGIN . "job_search/languages/English.php");
 }
-global $tp,$prefs,$sql;
+global $tp, $sql;
 // print $jobsch_uc;
 
 $arg = "select a.jobsch_cid,a.jobsch_vacancy,c.jobsch_catname,a.jobsch_document,a.jobsch_salary,s.jobsch_subname,s.jobsch_categoryid,s.jobsch_subid from #jobsch_ads as a

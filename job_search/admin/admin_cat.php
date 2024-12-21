@@ -51,6 +51,7 @@ class jobsch_cats_ui extends e_admin_ui
 		'jobsch_catid'            => array('title' => 'Catid', 'type' => 'number', 'data' => 'int', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
 		'jobsch_caticon'          => array('title' => JOBSCH_95, 'type' => 'icon', 'data' => 'safestr', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
 		'jobsch_catname'          => array('title' => JOBSCH_A25, 'type' => 'text', 'data' => 'safestr', 'width' => 'auto', 'filter' => true, 'inline' => true, 'validate' => true, 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
+		'jobsch_catsef'          => array('title' =>  LAN_SEFURL, 'type' => 'text', 'data' => 'safestr'  ),
 		'jobsch_catdesc'          => array('title' => JOBSCH_A26, 'type' => 'textarea', 'data' => 'safestr', 'width' => 'auto', 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
 		'jobsch_catclass'         => array('title' => JOBSCH_A27, 'type' => 'userclass', 'data' => 'int', 'width' => 'auto', 'batch' => true, 'filter' => true, 'help' => '', 'readParms' => [], 'writeParms' => [], 'class' => 'left', 'thclass' => 'left',),
 		'options'                 => array('title' => LAN_OPTIONS, 'type' => null, 'data' => null, 'width' => '10%', 'thclass' => 'center last', 'class' => 'center last', 'forced' => 'value', 'readParms' => [], 'writeParms' => [],),
@@ -67,8 +68,14 @@ class jobsch_cats_ui extends e_admin_ui
 	{
 		$this->getRequest()->setMode('cat');
 
-		$this->fields['jobsch_catname']['writeParms']['size'] = 'block-level'  ;
+		$this->fields['jobsch_catname']['writeParms']['size'] = 'xxlarge'  ;
 		$this->fields['jobsch_catdesc']['writeParms']['size'] = 'block-level';
+		$this->fields['jobsch_catsef']['writeParms']['size'] = 'xxlarge';
+		$this->fields['jobsch_catsef']['writeParms']['sef'] = 'jobsch_catname';
+		$this->fields['jobsch_catsef']['inline'] = false;  //way how to pass all checks, don't use it
+		$this->fields['jobsch_catsef']['batch'] = true;
+ 
+
 		$this->postFilterMarkup = $this->AddButton();
 	}
 
@@ -91,7 +98,39 @@ class jobsch_cats_ui extends e_admin_ui
 				<fieldset>";
 		return $text;
 	}
-	
+
+	public function beforeCreate($new_data, $old_data)
+	{
+		if (empty($new_data['jobsch_catsef']))
+		{
+			$new_data['jobsch_catsef'] = eHelper::title2sef($new_data['jobsch_catname']);
+		}
+		else
+		{
+			$new_data['jobsch_catsef'] = eHelper::secureSef($new_data['jobsch_catsef']);
+		}
+
+		$sef = e107::getParser()->toDB($new_data['jobsch_catsef']);
+
+		if (e107::getDb()->count('jobsch_cats', '(*)', "jobsch_catsef='{$sef}'"))
+		{
+			e107::getMessage()->addError(JOBSCH_A166);
+			return false;
+		}
+
+		$new_data = e107::getCustomFields()->processConfigPost('chapter_fields', $new_data);
+
+		return $new_data;
+	}
+
+	public function beforeUpdate($new_data, $old_data, $id)
+	{
+		$new_data = $this->beforeCreate($new_data, $old_data);
+
+ 
+		return $new_data;
+	}
+
 	// function beforeDelete() {
 	// 	//define("JOBSCH_A29", "Category in use. Can not delete.");
 	// 	//define("JOBSCH_A31","Unable to delete category");
