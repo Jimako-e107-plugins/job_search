@@ -33,6 +33,15 @@ class job_search_adminArea extends e_admin_dispatcher
 			'ui' 			=> 'jobsch_locals_form_ui',
 			'uipath' 		=> null
 		),
+
+
+		'subs'	=> array(
+			'controller' 	=> 'jobsch_subs_ui',
+			'path' 			=> null,
+			'ui' 			=> 'jobsch_subs_form_ui',
+			'uipath' 		=> null
+		),
+
 	);
 
 
@@ -48,6 +57,9 @@ class job_search_adminArea extends e_admin_dispatcher
 
 		'local/list'			=> array('caption' => JOBSCH_A130, 'perm' => 'P'),
 		'local/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
+
+		'subs/list'			=> array('caption' => JOBSCH_A4, 'perm' => 'P'),
+		'subs/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
 
 	);
 

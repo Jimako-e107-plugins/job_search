@@ -45,6 +45,8 @@ $var['admin_docs']['link'] = "admin_docs.php";
 $var['admin_news']['text'] = JOBSCH_A132;
 $var['admin_news']['link'] = "admin_news.php";
 
+$var['admin_subs']['text'] = "Subscribers";
+$var['admin_subs']['link'] = "admin_subs.php?mode=subs&action=list";
 
 show_admin_menu(JOBSCH_A1, $action, $var);
 ?>

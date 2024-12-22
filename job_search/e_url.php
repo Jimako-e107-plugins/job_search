@@ -26,12 +26,12 @@ class job_search_url // plugin-folder + '_url'
 		$config = array();
 
 		$alias = 'jobs';
-
+ 
 		$config['category'] = array(
 			'alias'         => "{$alias}/category",
 			'regex'			=> '^{alias}-(\d*)-([\w-]*)\/?\??(.*)',
 			'sef'			=> '{alias}-{jobsch_catid}-{jobsch_catsef}/',
-			'redirect'		=> '{e_PLUGIN}jobs/jobs_category.php?id=$1&sef=$2'
+			'redirect'		=> '{e_PLUGIN}'.JOBS_FOLDER.'/jobs_category.php?id=$1&sef=$2'
 		);
 
 
